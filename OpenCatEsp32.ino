@@ -4,9 +4,9 @@
 // #define NYBBLE  //Petoi 11 DOF robot cat: 2 on head + 1 on tail + 8 on leg
 // #define CUB
 
-// #define BiBoard_V0_1  //ESP32 Board with 12 channels of built-in PWM for joints
+//#define BiBoard_V0_1  //ESP32 Board with 12 channels of built-in PWM for joints
 #define BiBoard_V0_2
-// #define BiBoard2  //ESP32 Board with 16 channels of PCA9685 PWM for joints
+//#define BiBoard2  //ESP32 Board with 16 channels of PCA9685 PWM for joints
 //***********************
 
 // Send '!' token to reset the birthmark in the EEPROM so that the robot will restart to reset
@@ -16,13 +16,13 @@
 // allowed combinations: RANDOM_MIND + ULTRASONIC, RANDOM_MIND, ULTRASONIC, VOICE, CAMERA
 //  #define ULTRASONIC    //for Nybble's ultrasonic sensor. it WON‘T work with ESP32-based BiBoard directly because "AVR's 'SREG' was not declared in this scope"
 #define VOICE  // Petoi Grove voice module
-//#define VOICE_ENGLISH  //Force to switch to English when startup
+#define VOICE_ENGLISH  //Force to switch to English when startup
 // #define PIR           //for PIR (Passive Infrared) sensor
 // #define DOUBLE_TOUCH  //for double touch sensor
 // #define DOUBLE_LIGHT  //for double light sensor
 // #define DOUBLE_INFRARED_DISTANCE  //for double distance sensor
 // #define GESTURE       //for Gesture module
-// #define CAMERA        //for Mu Vision camera
+//#define CAMERA        //for Mu Vision camera
 // You need to install https://github.com/mu-opensource/MuVisionSensor3 as a zip library in Arduino IDE.
 // Set the four dial switches on the camera as **v ^ v v** (the second switch dialed up to I2C) and connect the camera module to the I2C grove on NyBoard.
 // The battery should be turned on to drive the servos.

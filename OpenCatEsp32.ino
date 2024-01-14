@@ -4,13 +4,13 @@
 // #define NYBBLE  //Petoi 11 DOF robot cat: 2 on head + 1 on tail + 8 on leg
 // #define CUB
 
-//#define BiBoard_V0_1  //ESP32 Board with 12 channels of built-in PWM for joints
-#define BiBoard_V0_2
+#define BiBoard_V0_1  //ESP32 Board with 12 channels of built-in PWM for joints
+//#define BiBoard_V0_2
 //#define BiBoard2  //ESP32 Board with 16 channels of PCA9685 PWM for joints
 //***********************
 
 // Send '!' token to reset the birthmark in the EEPROM so that the robot will restart to reset
-// #define AUTO_INIT  //activate it to automatically reset joint and imu calibration without prompts
+#define AUTO_INIT  //activate it to automatically reset joint and imu calibration without prompts
 
 // you can also activate the following modes (they will diable the gyro to save programming space)
 // allowed combinations: RANDOM_MIND + ULTRASONIC, RANDOM_MIND, ULTRASONIC, VOICE, CAMERA
@@ -38,7 +38,7 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);  // USB serial
   Serial.setTimeout(SERIAL_TIMEOUT);
-  //  Serial1.begin(115200); //second serial port
+//  Serial1.begin(115200); //second serial port
   while (Serial.available() && Serial.read())
     ;  // empty buffer
   initRobot();

@@ -266,7 +266,7 @@ void read_MuCamera() {
         lastBallType = ballType;
       }
     }
-    cameraBehavior(xCoord, yCoord, width);
+    // cameraBehavior(xCoord, yCoord, width);
     // FPS();
   } else if (millis() - noResultTime > 2000) {  // if no object is detected for 2 seconds, switch object
     (*Mu).VisionEnd(object[objectIdx]);

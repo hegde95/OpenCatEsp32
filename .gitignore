@@ -6,3 +6,6 @@
 *.svd
 debug_custom.json
 src/.vscode/*
+tmp.png
+__pycache__/*
+*.pyc

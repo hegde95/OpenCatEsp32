@@ -5,16 +5,16 @@ import struct
 import sys
 import time
 import logging
-from SerialCommunication import *  # module SerialCommunication.py
+from serialMaster.SerialCommunication import *  # module SerialCommunication.py
 import platform
 import copy
 import threading
 import os
-import config
+import serialMaster.config as config
 
 if not config.useMindPlus:
     import tkinter as tk
-    sys.path.append("../pyUI")
+    sys.path.append("pyUI")
     from translate import *
     language = languageList['English']
     def txt(key):

@@ -1,4 +1,4 @@
-from ardSerial import *
+from serialMaster.ardSerial import *
 
 
 class QuadController:

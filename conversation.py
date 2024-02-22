@@ -347,7 +347,7 @@ conv_llava_v1 = Conversation(
 conv_llava_robot_controller = Conversation(
     system="A sequence of robot control actions given by an artificial intelligence assistant. "
            "The assistant observes the images and provides a control action to the robot. ",
-    roles=("USER", "ASSISTANT"),
+    roles=("Robot user", "Assistant"),
     version="v1",
     messages=(),
     offset=0,
@@ -376,12 +376,12 @@ conv_templates = {
     "v1": conv_vicuna_v1,
     "vicuna_v1": conv_vicuna_v1,
     "llama_2": conv_llama_2,
-
     "plain": conv_llava_plain,
     "v0_plain": conv_llava_plain,
     "llava_v0": conv_llava_v0,
     "v0_mmtag": conv_llava_v0_mmtag,
     "llava_v1": conv_llava_v1,
+    "llava_robot_controller": conv_llava_robot_controller,
     "v1_mmtag": conv_llava_v1_mmtag,
     "llava_llama_2": conv_llava_llama_2,
 

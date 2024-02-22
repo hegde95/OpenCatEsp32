@@ -106,7 +106,9 @@ class LLAVAQuerier():
         self.model_name = model_name
         self.worker_address = worker_address
         self.controller_address = controller_address
+        # self.message = "<image> " + message
         self.message = message
+        self.self_explain_message = "<image> what do you see here?"
 
         if self.worker_address:
             self.worker_addr = self.worker_address
@@ -127,12 +129,10 @@ class LLAVAQuerier():
         if self.worker_addr == "":
             raise Exception("Worker address is empty")
 
+        self.conv = conv_templates["llava_robot_controller"].copy()
         # self.conv = conv_templates["llava_v1"].copy()
-    
-    def query(self, image):
-        conv = conv_templates["llava_v1"].copy()
-        conv.append_message(conv.roles[0], (self.message, image, "Default"))
-        conv.append_message(conv.roles[1], None)
+
+    def get_response(self, conv):
         prompt = conv.get_prompt()
 
         all_image_hash = conv.get_images()
@@ -160,6 +160,23 @@ class LLAVAQuerier():
                 else:
                     output = data["text"] + f" (error_code: {data['error_code']})"   
         return output     
+    
+    def query(self, image):
+
+        conv = self.conv.copy()
+        conv.append_message(conv.roles[0], (self.self_explain_message, image, "Default"))
+
+        explaination = self.get_response(conv)
+
+        # add the explaination to the conversation
+        conv.append_message(conv.roles[1], explaination)
+        conv.append_message(conv.roles[0], self.message)
+        conv.append_message(conv.roles[1], None)
+
+        output = self.get_response(conv)
+        return output
+
+
 
 
 

@@ -844,7 +844,8 @@ def manualSelect(PortList, window, needSendTask=True):
     bu.grid(row=2, column=1)
     bu2 = tk.Button(window, text=txt('Refresh'), command=lambda:refreshBox(ls))
     bu2.grid(row=1, column=1)
-    tk.messagebox.showwarning(title=txt('Warning'), message=txt('Manual mode'))
+    # tk.messagebox.showwarning(title=txt('Warning'), message=txt('Manual mode'))
+    print('Manual mode')
     window.mainloop()
     
 goodPorts = {}      # goodPorts is a dictionary, the structure is {SerialPort Object(<class 'SerialCommunication.Communication'>): portName(string), ...}

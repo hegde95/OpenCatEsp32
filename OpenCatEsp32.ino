@@ -15,8 +15,9 @@
 // you can also activate the following modes (they will diable the gyro to save programming space)
 // allowed combinations: RANDOM_MIND + ULTRASONIC, RANDOM_MIND, ULTRASONIC, VOICE, CAMERA
 //  #define ULTRASONIC    //for Nybble's ultrasonic sensor. it WON‘T work with ESP32-based BiBoard directly because "AVR's 'SREG' was not declared in this scope"
-#define VOICE  // Petoi Grove voice module
-#define VOICE_ENGLISH  //Force to switch to English when startup
+//#define VOICE  // Petoi Grove voice module
+//#define VOICE_ENGLISH  //Force to switch to English when startup
+#define BT_SPP  //for Bluetooth SPP module
 // #define PIR           //for PIR (Passive Infrared) sensor
 // #define DOUBLE_TOUCH  //for double touch sensor
 // #define DOUBLE_LIGHT  //for double light sensor

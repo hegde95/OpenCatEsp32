@@ -17,7 +17,7 @@ class QuadController:
         printH('Model list',config.modelList)
         print("You can type 'quit' or 'q' to exit.")
     
-    def sendTask(self, x, ports, time_taken=1, following_behavior="up"):
+    def sendTask(self, x, ports, time_taken=1, following_behavior=None):
         if x != "":
             if x == "q" or x == "quit":
                 return False
@@ -26,8 +26,10 @@ class QuadController:
                 task = x[1:].split()  # white space
                 # if len(task) <= 1:
                 send(ports, [x, 1])
-                time.sleep(time_taken)
-                send(ports, ["kup", 1])
+                if time_taken > 0:
+                    time.sleep(time_taken)
+                if following_behavior == "up":
+                    send(ports, ["kup", 1])
                 # else:
                 #     send(ports, [token, list(map(int, task)), 1])
         

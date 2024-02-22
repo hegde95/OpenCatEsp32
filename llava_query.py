@@ -106,9 +106,9 @@ class LLAVAQuerier():
         self.model_name = model_name
         self.worker_address = worker_address
         self.controller_address = controller_address
-        # self.message = "<image> " + message
-        self.message = message
-        self.self_explain_message = "<image> what do you see here?"
+        self.message = "<image> " + message
+        # self.message = message
+        # self.self_explain_message = "<image> Here is the most recent image, what do you see here?"
 
         if self.worker_address:
             self.worker_addr = self.worker_address
@@ -129,10 +129,10 @@ class LLAVAQuerier():
         if self.worker_addr == "":
             raise Exception("Worker address is empty")
 
-        self.conv = conv_templates["llava_robot_controller"].copy()
-        # self.conv = conv_templates["llava_v1"].copy()
+        # self.conv = conv_templates["llava_robot_controller"].copy()
+        self.conv = conv_templates["llava_v1"].copy()
 
-    def get_response(self, conv):
+    def get_response(self, conv, max_new_tokens=512):
         prompt = conv.get_prompt()
 
         all_image_hash = conv.get_images()
@@ -142,9 +142,9 @@ class LLAVAQuerier():
         pload = {
             'model': 'llava-v1.5-7b', 
             'prompt': prompt, 
-            'temperature': 0.2, 
-            'top_p': 0.7, 
-            'max_new_tokens': 512, 
+            'temperature': 0, #0.2, 
+            'top_p': 0,#0.7, 
+            'max_new_tokens': max_new_tokens, 
             'stop': '</s>', 
             'images': f"List of 1 images: {all_image_hash}"
         }
@@ -160,21 +160,38 @@ class LLAVAQuerier():
                 else:
                     output = data["text"] + f" (error_code: {data['error_code']})"   
         return output     
+    def parse_output(self, output):
+        # the output is a string of dictionary of {explanations:command}
+
+        # remove the curly braces
+        output = output[1:-1]
+
+        # split the string into a list of strings
+        output = output.split(":")
+
+        command = output[1].strip().strip("\"").lower()
+        explaination = output[0].strip().strip("\"").lower()
+        return command, explaination 
     
     def query(self, image):
 
         conv = self.conv.copy()
-        conv.append_message(conv.roles[0], (self.self_explain_message, image, "Default"))
-
-        explaination = self.get_response(conv)
+        # conv.append_message(conv.roles[0], (self.self_explain_message, image, "Default"))
+        # conv.append_message(conv.roles[1], None)
+        # explaination = self.get_response(conv, max_new_tokens=512)
 
         # add the explaination to the conversation
-        conv.append_message(conv.roles[1], explaination)
-        conv.append_message(conv.roles[0], self.message)
+        # conv.replace_message(-1, conv.roles[1], explaination)
+        conv.append_message(conv.roles[0], (self.message, image, "Default"))
         conv.append_message(conv.roles[1], None)
 
-        output = self.get_response(conv)
-        return output
+        output = self.get_response(conv, max_new_tokens=512)
+        
+        command, explaination = self.parse_output(output)
+
+        # add the output to the conversation
+        # conv.replace_message(-1, conv.roles[1], output)
+        return "k"+command, explaination
 
 
 

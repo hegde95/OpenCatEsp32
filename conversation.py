@@ -106,6 +106,15 @@ class Conversation:
     def append_message(self, role, message):
         self.messages.append([role, message])
 
+    def replace_message(self, idx, role, message):
+        self.messages[idx] = [role, message]
+
+    def delete_message(self, idx):
+        del self.messages[idx]
+    
+    def delete_oldest_message(self):
+        del self.messages[0]
+
     def get_images(self, return_pil=False):
         images = []
         for i, (role, msg) in enumerate(self.messages[self.offset:]):
@@ -345,8 +354,8 @@ conv_llava_v1 = Conversation(
 )
 
 conv_llava_robot_controller = Conversation(
-    system="A sequence of robot control actions given by an artificial intelligence assistant. "
-           "The assistant observes the images and provides a control action to the robot. ",
+    system="A conversation between an human controlling a navigation robot and an artificial intelligence assistant. "
+           "The assistant observes the images and a description of the task at hand, and provides a control action to the robot. ",
     roles=("Robot user", "Assistant"),
     version="v1",
     messages=(),

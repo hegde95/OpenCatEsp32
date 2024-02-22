@@ -6,10 +6,12 @@ Definition: The process involves scrutinizing an image to detect the presence of
 Commands:
 
 Sit: Issued upon the detection of any number within the image, prompting the robot to adopt a sitting stance.
-Up: Deployed when numbers are absent from the view, signaling the robot to stand upright.
+Turn: Deployed when numbers are absent from the view, signaling the robot to turn its head a random degree between [-90 to 90].
 Usage:
 
-Absence of Target Numbers: {"None of the target numbers are present in the image": "Up"}
+Absence of Target Numbers: {"None of the target numbers are present in the image, searching elsewhere": "Turn"}
+
 Presence of a Target Number: {"The number [detected number] is visible [location in the image]": "Sit"}
+
 Note: Responses are structured to include both the action directed towards the robot and the justification for such a decision, ensuring clarity and precision in command execution.
 Your response must be a single dictionary only! {[reason]:[command]}

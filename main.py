@@ -7,6 +7,7 @@ import cv2
 
 def main():
     controller = QuadController()
+    ret = controller.sendTask("reset", goodPorts, time_taken=0)    
     # message = "<image> Do you see a number 6? reply with a simple yes or no."
     # message = "If you do not see the number 6, reply 'kup' and if you see the number 6 in this image, reply with 'ksit'."
     # message = "The task is to search for a number in the image and control a robot. "\
@@ -39,7 +40,9 @@ def main():
         #     command = "kup"
         command =  output
         print(command, explaination)
-        controller.sendTask(command, goodPorts, time_taken=0)
+        ret = controller.sendTask(command, goodPorts, time_taken=0)
+        if ret:
+            break
 
 
 

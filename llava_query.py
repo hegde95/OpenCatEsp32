@@ -171,6 +171,11 @@ class LLAVAQuerier():
 
         command = output[1].strip().strip("\"").lower()
         explaination = output[0].strip().strip("\"").lower()
+
+        # if command == "sit":
+        #     command = "ksit"
+        # elif "turn" in command:
+
         return command, explaination 
     
     def query(self, image):
@@ -191,7 +196,7 @@ class LLAVAQuerier():
 
         # add the output to the conversation
         # conv.replace_message(-1, conv.roles[1], output)
-        return "k"+command, explaination
+        return command, explaination
 
 
 

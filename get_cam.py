@@ -6,29 +6,26 @@ import time
 # The URL of the video stream from the img tag
 stream_url = 'http://192.168.4.1:8888/stream'
 
-def get_image():
-    # Open a connection to the stream
-    response = requests.get(stream_url, stream=True)
+def get_image(wait_time=0):
+    time.sleep(wait_time)  # Consider setting this to a very small value or removing it.
+    
+    with requests.get(stream_url, stream=True) as response:
+        if response.status_code == 200:
+            bytes_buffer = bytes()
+            for chunk in response.iter_content(chunk_size=256):
+                bytes_buffer += chunk
+                # Find the last JPEG start and end
+                a = bytes_buffer.rfind(b'\xff\xd8', 0, -2)
+                b = bytes_buffer.rfind(b'\xff\xd9', 2)
+                
+                # If we have a start and end of the last frame, process the image
+                if a != -1 and b != -1 and b > a:
+                    jpg = bytes_buffer[a:b+2]
+                    bytes_buffer = bytes_buffer[b+2:]
+                    image = cv2.imdecode(np.frombuffer(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
+                    return image  # Return the most recent image
 
-    # Check if the connection was successful
-    if response.status_code == 200:
-        # Use a bytes buffer to store bytes from the stream
-        bytes_buffer = bytes()
-        for chunk in response.iter_content(chunk_size=1024):
-            bytes_buffer += chunk
-            # Check for the start and end of a JPEG frame
-            a = bytes_buffer.find(b'\xff\xd8')
-            b = bytes_buffer.find(b'\xff\xd9')
-            # If we have a start and end of a frame, process the image
-            if a != -1 and b != -1:
-                jpg = bytes_buffer[a:b+2]
-                bytes_buffer = bytes_buffer[b+2:]
-                # Decode the JPEG data and do something with the image, for example, display it
-                image = cv2.imdecode(np.frombuffer(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
-                return image
-            
-    else:
-        return None
+    return None 
     #             cv2.imshow('Video feed', image)
     #             if cv2.waitKey(1) == 27:
     #                 break
